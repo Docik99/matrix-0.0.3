@@ -131,7 +131,7 @@ matrix_t<T> matrix_t<T>::operator -( matrix_t<T> const & other ) const {
 
 template <typename T>
 matrix_t<T> matrix_t<T>::operator *( matrix_t<T> const & other ) const {
-    matrix_t<T> result(other.rows_, other.collumns_);
+    matrix_t<T> result(rows_, other.collumns_);
     for (int i = 0; i < rows_; i++) {
         for (int j = 0; j < other.collumns_; j++) {
             result.elements_[i][j] = 0;
