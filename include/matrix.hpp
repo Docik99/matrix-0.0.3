@@ -115,8 +115,8 @@ matrix_t<T> matrix_t<T>::operator +( matrix_t<T> const & other ) const {
             result.elements_[i][j] = elements_[i][j] + other.elements_[i][j];
         }
     }
-    if (result.rows() == rows_ && result.collumns_ == collumns_) return result;
-    else exit(00);
+    assert(result.rows() == rows_ && result.collumns() == collumns_);
+    return result;
 }
 
 template <typename T>
@@ -125,8 +125,8 @@ matrix_t<T> matrix_t<T>::operator -( matrix_t<T> const & other ) const {
     for (unsigned int i = 0; i < rows_; i++)
         for (unsigned int j = 0; j < collumns_; j++)
             result.elements_[i][j] = elements_[i][j] - other.elements_[i][j];
-    if (result.rows() == rows_ && result.collumns_ == collumns_) return result;
-    else exit(00);
+    assert(result.rows() == rows_ && result.collumns() == collumns_);
+    return result;
 }
 
 template <typename T>
@@ -139,8 +139,8 @@ matrix_t<T> matrix_t<T>::operator *( matrix_t<T> const & other ) const {
                 result.elements_[i][j] += elements_[i][f] * other.elements_[f][j];
         }
     }
-    if (result.rows() == rows_ && result.collumns_ == other.collumns_) return result;
-    else exit(00);
+    assert(result.rows() == rows_ && result.collumns() == other.collumns_);
+    return result;
 }
 
 template <typename T>
@@ -150,8 +150,8 @@ matrix_t<T> & matrix_t<T>::operator -=( matrix_t<T> const & other ) {
     for (unsigned int i = 0; i < rows_; i++)
         for (unsigned int j = 0; j < collumns_; j++)
             elements_[i][j] -= other.elements_[i][j];
-    if (rows_ == other.rows_ && collumns_ == other.collumns_) return *this;
-    else exit(00);
+    assert(this->rows_ == other.rows_ && this->collumns_ == other.collumns_);
+    return *this;
 }
 
 
@@ -162,8 +162,8 @@ matrix_t<T> & matrix_t<T>::operator +=( matrix_t<T> const & other ) {
     for (unsigned int i = 0; i < rows_; i++)
         for (unsigned int j = 0; j < collumns_; j++)
             elements_[i][j] += other.elements_[i][j];
-    if (rows_ == other.rows_ && collumns_ == other.collumns_) return *this;
-    else exit(00);
+    assert(this->rows_ == other.rows_ && this->collumns_ == other.collumns_);
+    return *this;
 }
 
 template <typename T>
@@ -177,8 +177,8 @@ matrix_t<T> & matrix_t<T>::operator *=( matrix_t<T> const & other ) {
         }
     }
     collumns_ = other.collumns_;
-    if (rows_ == rows_ && collumns_ == other.collumns_) return *this;
-    else exit(00);
+    assert(this->rows_ == rows_ && this->collumns_ == other.collumns_);
+    return *this;
 }
 
 template <typename T>
