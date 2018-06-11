@@ -249,3 +249,39 @@ TEST_CASE("a-=b")
     
     REQUIRE( input3 == ostream.str());
 }
+
+TEST_CASE("dfgh"){
+   string input1{
+        "3, 4\n"
+        "2 2 2 2\n"
+        "2 2 2 2\n"
+        "2 2 2 2" };
+    matrix_t <int> matrix1;
+    istringstream istream1{input1};
+   
+    string input2{
+        "4, 2\n"
+        "1 1\n"
+        "1 1\n"
+        "1 1\n"
+        "1 1\n" };
+    matrix_t <int> matrix2;
+    istringstream istream2{input2};
+    
+    string input3{
+        "3, 2\n"
+        "8 8\n"
+        "8 8\n"
+        "8 8" };
+    matrix_t <int> matrix3;
+    istringstream istream3{input3};
+    
+    matrix1.read(istream1);
+    matrix2.read(istream2);
+    matrix3 = matrix1 * matrix2;
+    
+    ostringstream ostream;
+    matrix3.write( ostream );
+    
+    REQUIRE( input3 == ostream.str());
+}
