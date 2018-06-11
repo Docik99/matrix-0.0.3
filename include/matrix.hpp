@@ -12,9 +12,9 @@ public:
 
     matrix_t(int rows, int collumns);
 
-    matrix_t(matrix_t const &other);
+    matrix_t(matrix_t<T> const &other);
 
-    matrix_t &operator=(matrix_t const &other);
+    matrix_t &operator=(matrix_t<T> const &other);
 
     ~matrix_t();
 
@@ -22,17 +22,17 @@ public:
 
     unsigned int collumns() const;
 
-    matrix_t operator+(matrix_t const &other) const;
+    matrix_t operator+(matrix_t<T> const &other) const;
 
-    matrix_t operator-(matrix_t const &other) const;
+    matrix_t operator-(matrix_t<T> const &other) const;
 
-    matrix_t operator*(matrix_t const &other) const;
+    matrix_t operator*(matrix_t<T> const &other) const;
 
-    matrix_t &operator-=(matrix_t const &other);
+    matrix_t &operator-=(matrix_t<T> const &other);
 
-    matrix_t &operator+=(matrix_t const &other);
+    matrix_t &operator+=(matrix_t<T> const &other);
 
-    matrix_t &operator*=(matrix_t const &other);
+    matrix_t &operator*=(matrix_t<T> const &other);
 
     std::istream &read(std::istream &stream);
 
@@ -115,7 +115,8 @@ matrix_t<T> matrix_t<T>::operator +( matrix_t<T> const & other ) const {
             result.elements_[i][j] = elements_[i][j] + other.elements_[i][j];
         }
     }
-    return result;
+    if (result.rows() == rows_ && result.collumns_ == collumns_) return result;
+    else exit(00);
 }
 
 template <typename T>
@@ -124,7 +125,8 @@ matrix_t<T> matrix_t<T>::operator -( matrix_t<T> const & other ) const {
     for (unsigned int i = 0; i < rows_; i++)
         for (unsigned int j = 0; j < collumns_; j++)
             result.elements_[i][j] = elements_[i][j] - other.elements_[i][j];
-    return result;
+    if (result.rows() == rows_ && result.collumns_ == collumns_) return result;
+    else exit(00);
 }
 
 template <typename T>
@@ -137,7 +139,8 @@ matrix_t<T> matrix_t<T>::operator *( matrix_t<T> const & other ) const {
                 result.elements_[i][j] += elements_[i][f] * other.elements_[f][j];
         }
     }
-    return result;
+    if (result.rows() == rows_ && result.collumns_ == other.collumns_) return result;
+    else exit(00);
 }
 
 template <typename T>
@@ -147,7 +150,8 @@ matrix_t<T> & matrix_t<T>::operator -=( matrix_t<T> const & other ) {
     for (unsigned int i = 0; i < rows_; i++)
         for (unsigned int j = 0; j < collumns_; j++)
             elements_[i][j] -= other.elements_[i][j];
-    return *this;
+    if (rows_ == other.rows_ && collumns_ == other.collumns_) return *this;
+    else exit(00);
 }
 
 
@@ -158,7 +162,8 @@ matrix_t<T> & matrix_t<T>::operator +=( matrix_t<T> const & other ) {
     for (unsigned int i = 0; i < rows_; i++)
         for (unsigned int j = 0; j < collumns_; j++)
             elements_[i][j] += other.elements_[i][j];
-    return *this;
+    if (rows_ == other.rows_ && collumns_ == other.collumns_) return *this;
+    else exit(00);
 }
 
 template <typename T>
@@ -172,7 +177,8 @@ matrix_t<T> & matrix_t<T>::operator *=( matrix_t<T> const & other ) {
         }
     }
     collumns_ = other.collumns_;
-    return *this;
+    if (rows_ == rows_ && collumns_ == other.collumns_) return *this;
+    else exit(00);
 }
 
 template <typename T>
