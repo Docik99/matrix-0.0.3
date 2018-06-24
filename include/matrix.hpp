@@ -109,28 +109,29 @@ unsigned int matrix_t<T>::collumns() const {
 
 template <typename T>
 matrix_t<T> matrix_t<T>::operator +( matrix_t<T> const & other ) const {
+    assert(rows_ == other.rows_ && collumns_ == other.collumns_);
     matrix_t result(rows_, collumns_);
     for (unsigned int i = 0; i < rows_; i++){
         for (unsigned int j = 0; j < collumns_; j++){
             result.elements_[i][j] = elements_[i][j] + other.elements_[i][j];
         }
     }
-    assert(result.rows() == rows_ && result.collumns() == collumns_);
     return result;
 }
 
 template <typename T>
 matrix_t<T> matrix_t<T>::operator -( matrix_t<T> const & other ) const {
+    assert(rows_ == other.rows_ && collumns_ == other.collumns_);
     matrix_t<T> result(rows_, collumns_);
     for (unsigned int i = 0; i < rows_; i++)
         for (unsigned int j = 0; j < collumns_; j++)
             result.elements_[i][j] = elements_[i][j] - other.elements_[i][j];
-    assert(result.rows() == rows_ && result.collumns() == collumns_);
     return result;
 }
 
 template <typename T>
 matrix_t<T> matrix_t<T>::operator *( matrix_t<T> const & other ) const {
+    assert(collumns_ == other.rows_ );
     matrix_t<T> result(rows_, other.collumns_);
     for (int i = 0; i < rows_; i++) {
         for (int j = 0; j < other.collumns_; j++) {
@@ -139,35 +140,31 @@ matrix_t<T> matrix_t<T>::operator *( matrix_t<T> const & other ) const {
                 result.elements_[i][j] += elements_[i][f] * other.elements_[f][j];
         }
     }
-    assert(result.rows() == rows_ && result.collumns() == other.collumns_);
     return result;
 }
 
 template <typename T>
 matrix_t<T> & matrix_t<T>::operator -=( matrix_t<T> const & other ) {
-    rows_ = other.rows_;
-    collumns_ = other.collumns_;
+    assert(rows_ == other.rows_ && collumns_ == other.collumns_);
     for (unsigned int i = 0; i < rows_; i++)
         for (unsigned int j = 0; j < collumns_; j++)
             elements_[i][j] -= other.elements_[i][j];
-    assert(this->rows_ == other.rows_ && this->collumns_ == other.collumns_);
     return *this;
 }
 
 
 template <typename T>
 matrix_t<T> & matrix_t<T>::operator +=( matrix_t<T> const & other ) {
-    rows_ = other.rows_;
-    collumns_ = other.collumns_;
+    assert(rows_ == other.rows_ && collumns_ == other.collumns_);
     for (unsigned int i = 0; i < rows_; i++)
         for (unsigned int j = 0; j < collumns_; j++)
             elements_[i][j] += other.elements_[i][j];
-    assert(this->rows_ == other.rows_ && this->collumns_ == other.collumns_);
     return *this;
 }
 
 template <typename T>
 matrix_t<T> & matrix_t<T>::operator *=( matrix_t<T> const & other ) {
+    assert(collumns_ == other.rows_);
     matrix_t<T> copy(*this);
     for (int i = 0; i < rows_; i++) {
         for (int j = 0; j < other.collumns_; j++) {
@@ -177,7 +174,6 @@ matrix_t<T> & matrix_t<T>::operator *=( matrix_t<T> const & other ) {
         }
     }
     collumns_ = other.collumns_;
-    assert(this->rows_ == rows_ && this->collumns_ == other.collumns_);
     return *this;
 }
 
